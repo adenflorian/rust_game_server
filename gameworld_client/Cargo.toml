@@ -1,0 +1,4 @@
+[package]
+name = "gameworld_client"
+version = "0.1.0"
+authors = ["David Valachovic <AdenFlorian@gmail.com>"]
