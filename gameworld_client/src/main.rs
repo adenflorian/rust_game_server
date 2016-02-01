@@ -2,7 +2,7 @@ use std::io;
 use std::net::Ipv4Addr;
 use std::net::SocketAddrV4;
 use std::net::UdpSocket;
-use std::str;
+//use std::str;
 
 fn main() {
 	foo().unwrap();
@@ -15,23 +15,24 @@ fn foo() -> Result<(), io::Error> {
 	let dest_ip_addr = Ipv4Addr::new(127, 0, 0, 1);
 	let dest_sock_addr = SocketAddrV4::new(dest_ip_addr, 34254);
 
-	let buf = "Zilch".as_bytes();
-	println!("Sending...");
-	try!(socket.send_to(&buf, &dest_sock_addr));
+	let buf: &[u8] = "Zilch".as_bytes();
+	//let buf = [1u8; 65507];	// max size of buffer
+	//let buf = [1u8; 65508];	// too big
+	print!("Sending...");
+	//try!(socket.send_to(&buf, &dest_sock_addr));
+	match socket.send_to(&buf, &dest_sock_addr) {
+		Ok(ok) => println!("OK: {} bytes written to socket", ok),
+		Err(e) => return Err(e)
+	}
 
-	//println!("Got here!3");
 	//let (amt, src) = try!(socket.recv_from(&mut buf));
 	//let mut resp = [0; 10];
 
-	//println!("Got here!4");
 	//try!(socket.recv_from(&mut resp));
 
-	//println!("Got here!5");
 	//println!("{}", str::from_utf8(&resp).unwrap());
 
-	//println!("Got here!6");
-	//drop(socket); // close the socket
+	drop(socket); // close the socket
 
-	println!("Sent! I think...");
 	Ok(())
 }
