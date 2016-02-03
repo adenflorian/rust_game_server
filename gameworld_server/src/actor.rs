@@ -16,9 +16,15 @@ impl Actor {
 			position: Vector2 {x: rng.gen_range(-32, 33), y: rng.gen_range(-32, 33)}
 		}
 	}
+	pub fn get_name(&self) -> String {
+		return self.name.clone();
+	}
+	pub fn get_position(&self) -> Vector2 {
+		return self.position.clone();
+	}
 	pub fn think(&mut self, actors: &Vec<Actor>) {
 		//println!("{} is thinking", self.name);
-		thread::sleep_ms(500);
+		thread::sleep_ms(25);
 
 		// 1. Goal
 		// Be close to other Actors

@@ -5,3 +5,4 @@ authors = ["David Valachovic <AdenFlorian@gmail.com>"]
 
 [dependencies]
 rand = "0.3"
+byteorder = "0.4.2"

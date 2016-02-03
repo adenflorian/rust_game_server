@@ -1,16 +1,20 @@
 #![allow(dead_code)]
 
 extern crate rand;
-extern crate rustc_serialize;
+extern crate byteorder;
 
 mod actor;
 mod vector2;
 mod socket;
+mod client;
 
 use actor::Actor;
+use client::Client;
 use std::thread;
 use std::sync::mpsc::channel;
 use std::sync::mpsc::Receiver;
+use std::net::Ipv4Addr;
+use std::net::SocketAddrV4;
 
 fn main() {
 
@@ -42,6 +46,13 @@ fn main() {
 	actors_say_positions(&actors);
 
 	let mut actors_clone: Vec<Actor>;
+
+	let mut connected_clients: Vec<Client> = Vec::new();
+
+	let dest_ip_addr = Ipv4Addr::new(127, 0, 0, 1);
+	let dest_sock_addr = SocketAddrV4::new(dest_ip_addr, 31222);
+	connected_clients.push(Client::new(dest_sock_addr));
+
 	let mut count;
 
 	loop {
@@ -72,9 +83,9 @@ fn main() {
 	    // TODO Make Board struct
 
 	    // TODO Send updated positions to connected clients
-	    // for client in &connected_clients {
-	    //     client.send_actors(&actors);
-	    // }
+	    for client in &connected_clients {
+	        client.send_actors(&actors).unwrap();
+	    }
 
 	    counter += 1;
 
