@@ -34,7 +34,6 @@ impl Client {
 
 		println!("message vector length: {}", message_vec.len());
 
-
 		print!("Sending...");
 
 		match socket.send_to(&message_vec, &self.address) {
